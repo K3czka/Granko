@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gramy?</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,sans-serif;
+}
+
+
+body{
+
+    min-height:100svh;
+
+    padding:25px 15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow-x:hidden;
+
+
+    background:
+    radial-gradient(circle at top left,#fff,transparent 40%),
+    radial-gradient(circle at bottom right,#ddd,transparent 40%),
+    #eee;
+
+}
+
+
+
+.card{
+
+    width:520px;
+
+    max-width:100%;
+
+    padding:50px;
+
+
+    background:rgba(255,255,255,.8);
+
+    backdrop-filter:blur(20px);
+
+
+    border-radius:32px;
+
+
+    text-align:center;
+
+
+    box-shadow:0 30px 80px rgba(0,0,0,.12);
+
+}
+
+
+
+h1{
+
+    font-size:36px;
+
+    margin-bottom:15px;
+
+    letter-spacing:-1px;
+
+}
+
+
+
+p{
+
+    color:#777;
+
+    margin-bottom:30px;
+
+}
+
+
+
+.buttons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+
+
+button{
+
+
+    width:100%;
+
+    min-height:58px;
+
+
+    border:none;
+
+    border-radius:18px;
+
+
+    font-size:16px;
+
+    font-weight:600;
+
+
+    cursor:pointer;
+
+
+    transition:.25s;
+
+}
+
+
+
+button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+.primary{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+
+.secondary{
+
+    background:white;
+
+    border:1px solid #ddd;
+
+}
+
+
+
+.danger{
+
+    background:#f2f2f2;
+
+}
+
+
+
+.confirm{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+
+.screen{
+
+    display:none;
+
+}
+
+
+
+.active{
+
+    display:block;
+
+}
+
+
+
+
+.calendar{
+
+
+    display:grid;
+
+    grid-template-columns:repeat(7,1fr);
+
+
+    gap:8px;
+
+
+    margin:20px 0;
+
+}
+
+
+
+.day{
+
+
+    aspect-ratio:1;
+
+
+    border-radius:12px;
+
+
+    border:1px solid #ddd;
+
+
+    background:white;
+
+
+    cursor:pointer;
+
+}
+
+
+
+.day.selected{
+
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+
+
+
+.time-grid{
+
+
+    display:grid;
+
+
+    grid-template-columns:repeat(3,1fr);
+
+
+    gap:10px;
+
+
+    margin:20px 0;
+
+}
+
+
+
+.time{
+
+
+    padding:15px 5px;
+
+
+    border-radius:14px;
+
+
+    border:1px solid #ddd;
+
+
+    background:white;
+
+
+    cursor:pointer;
+
+}
+
+
+
+.time.selected{
+
+    background:#111;
+
+    color:white;
+
+}
+
+
+
+
+#done{
+
+    display:none;
+
+    margin-top:25px;
+
+    font-weight:600;
+
+}
+
+
+
+
+
+@media(max-width:600px){
+
+
+body{
+
+    align-items:center;
+
+    padding-top:20px;
+
+}
+
+
+
+.card{
+
+    padding:35px 22px;
+
+    border-radius:25px;
+
+}
+
+
+
+h1{
+
+    font-size:28px;
+
+}
+
+
+
+p{
+
+    font-size:15px;
+
+}
+
+
+
+button{
+
+    min-height:55px;
+
+}
+
+
+
+.time-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+
+
+}
+
+
+
+@media(max-width:380px){
+
+
+.card{
+
+    padding:30px 16px;
+
+}
+
+
+h1{
+
+    font-size:24px;
+
+}
+
+
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+<div id="main" class="screen active">
+
+
+<h1>Gramy dziś z Kanu?</h1>
+
+
+<p>Wybierz swoją odpowiedź</p>
+
+
+
+<div class="buttons">
+
+
+<button class="primary" onclick="yesGame()">
+
+Tak
+
+</button>
+
+
+
+<button class="secondary" onclick="yesGame()">
+
+Pewnie że tak
+
+</button>
+
+
+
+<button class="danger" onclick="cantGame()">
+
+Dziś nie mogę :c
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div id="confirm" class="screen">
+
+
+<h1>Na pewno?</h1>
+
+
+<p>Nie możesz dziś grać?</p>
+
+
+
+<div class="buttons">
+
+
+<button class="primary" onclick="chooseDate()">
+
+Tak
+
+</button>
+
+
+<button onclick="backMain()">
+
+Nie
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="date" class="screen">
+
+
+<h1>Wybierz dzień</h1>
+
+
+<p>Wybierz termin</p>
+
+
+
+<div class="calendar" id="calendar"></div>
+
+
+
+<button class="confirm" onclick="chooseHour()">
+
+Dalej
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="hour" class="screen">
+
+
+<h1>Godzina</h1>
+
+
+<p>Wybierz godzinę</p>
+
+
+
+<div class="time-grid">
+
+
+<div class="time">16:00</div>
+
+<div class="time">17:00</div>
+
+<div class="time">18:00</div>
+
+<div class="time">19:00</div>
+
+<div class="time">20:00</div>
+
+<div class="time">21:00</div>
+
+
+</div>
+
+
+
+<button class="confirm" onclick="sendResult()">
+
+Potwierdź
+
+</button>
+
+
+
+</div>
+
+
+
+
+<div id="done"></div>
+
+
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
